@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:demo
+    driver-class-name: org.h2.Driver
+    schema: classpath:script/schema.sql
+
+velocity:
+  config:
+    input.encode: utf-8
+    output.encode: utf-8
+  basePackage: cn.pri.smilly.server
+  templatesPath: classpath:templates
+  template:
+    domain.java: domain.po
+    mapper.java: mapper
+    mapper.xml: classpath:mapper
+    service.java: service
+    serviceImpl.java: service.impl
+    controller.java: controller
+  tablePrefix: sys_
+  ignoredTables: sys_user_role, sys_privilege
+
+
+

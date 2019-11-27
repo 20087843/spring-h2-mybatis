@@ -1,0 +1,58 @@
+##导入宏定义
+$!define
+
+##设置表后缀（宏定义）
+#setTableSuffix("Controller")
+
+##保存文件（宏定义）
+#save("/controller", "Controller.java")
+
+##包路径（宏定义）
+#setPackageSuffix("controller")
+
+##定义服务名
+#set($serviceName = $!tool.append($!tool.firstLowerCase($!table.name), "Service"))
+##定义实体对象名
+#set($entityName = $!tool.firstLowerCase($!table.name))
+
+import $!{table.basePackage}.domain.$!{table.name};
+import $!{table.basePackage}.service.$!{table.name}Service;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.io.Serializable;
+import java.util.List;
+
+##表注释（宏定义）
+@RestController
+@RequestMapping("$!tool.firstLowerCase($!table.name)")
+public class $!{tableName} {
+
+    @Resource
+    private $!{table.name}Service $!{serviceName};
+
+    @GetMapping
+    public R selectAll($!table.name $!entityName) {
+        return $!{serviceName};
+    }
+
+    @GetMapping("/{id}")
+    public R selectOne(@PathVariable $!{table.primary.type} id) {
+        return success(this.$!{serviceName}.getById(id));
+    }
+
+    @PostMapping
+    public R insert(@RequestBody $!table.name $!entityName) {
+        return success(this.$!{serviceName}.save($!entityName));
+    }
+
+    @PutMapping
+    public R update(@RequestBody $!table.name $!entityName) {
+        return success(this.$!{serviceName}.updateById($!entityName));
+    }
+
+    @DeleteMapping("/{id}")
+    public R delete(@PathVariable $!{table.primary.type} id) {
+        return success(this.$!{serviceName}.removeByIds(idList));
+    }
+}

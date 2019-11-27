@@ -1,0 +1,12 @@
+server:
+  port: 8090
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:demo
+    driver-class-name: org.h2.Driver
+    schema: classpath:script/schema.sql
+    data: classpath:script/data.sql
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
